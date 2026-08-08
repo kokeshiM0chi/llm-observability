@@ -45,6 +45,15 @@
       "targets": [{ "expr": "{service_name=~\".+\"}", "refId": "A" }],
       "title": "Log fields — expand a row to inspect",
       "type": "logs"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
+      "id": 5,
+      "targets": [{ "expr": "sum by (token_type) (codex_turn_token_usage_sum{token_type=~\"input_token_count|output_token_count\"})", "legendFormat": "{{token_type}}", "refId": "A" }],
+      "title": "Input / output token count",
+      "type": "timeseries"
     }
   ],
   "refresh": "15s",
