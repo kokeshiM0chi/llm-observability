@@ -47,15 +47,15 @@
       "type": "logs"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": { "type": "loki", "uid": "loki" },
       "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
       "id": 5,
       "targets": [
-        { "expr": "sum(codex_turn_token_usage_sum{token_type=~\"(?i).*input.*\"})", "legendFormat": "input_token_count", "refId": "A" },
-        { "expr": "sum(codex_turn_token_usage_sum{token_type=~\"(?i).*output.*\"})", "legendFormat": "output_token_count", "refId": "B" }
+        { "expr": "sum_over_time({service_name=~\".+\"} | unwrap input_token_count [$__interval])", "legendFormat": "input_token_count", "refId": "A" },
+        { "expr": "sum_over_time({service_name=~\".+\"} | unwrap output_token_count [$__interval])", "legendFormat": "output_token_count", "refId": "B" }
       ],
-      "title": "Input / output token count",
+      "title": "Input / output token count (Loki fields)",
       "type": "timeseries"
     }
   ],
