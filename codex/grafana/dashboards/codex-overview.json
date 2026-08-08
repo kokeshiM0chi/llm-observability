@@ -67,8 +67,7 @@
         { "expr": "sum by (conversation_id) (sum_over_time({service_name=~\".+\"} | json | unwrap input_token_count [$__interval]))", "legendFormat": "input / {{conversation_id}}", "refId": "A" },
         { "expr": "sum by (conversation_id) (sum_over_time({service_name=~\".+\"} | json | unwrap output_token_count [$__interval]))", "legendFormat": "output / {{conversation_id}}", "refId": "B" }
       ],
-      "transformations": [{ "id": "cumulativeSum", "options": {} }],
-      "title": "Cumulative token count by conversation",
+      "title": "Token count by conversation (interval total)",
       "type": "timeseries"
     }
   ],
