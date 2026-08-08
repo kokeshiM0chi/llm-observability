@@ -1,0 +1,58 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "panels": [
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "targets": [{ "expr": "sum by (token_type) (rate(codex_turn_token_usage_sum[$__rate_interval]))", "legendFormat": "{{token_type}}", "refId": "A" }],
+      "title": "Token usage / second",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "targets": [{ "expr": "histogram_quantile(0.95, sum by (le) (rate(codex_turn_duration_bucket[$__rate_interval])))", "legendFormat": "p95", "refId": "A" }],
+      "title": "Turn duration p95",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "tempo", "uid": "tempo" },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 8 },
+      "id": 3,
+      "targets": [{ "queryType": "traceql", "query": "{ span.service.name = \"codex\" }", "refId": "A" }],
+      "title": "Codex traces",
+      "type": "traces"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "description": "ログ行を展開すると、Loki が抽出したラベルとフィールドを確認できます。表示される実データから取得可能なフィールドを探すためのパネルです。",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 18 },
+      "id": 4,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyJSON": true,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [{ "expr": "{service_name=~\".+\"}", "refId": "A" }],
+      "title": "Log fields — expand a row to inspect",
+      "type": "logs"
+    }
+  ],
+  "refresh": "15s",
+  "schemaVersion": 39,
+  "tags": ["codex", "otel"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "Codex observability",
+  "uid": "codex-observability",
+  "version": 1
+}

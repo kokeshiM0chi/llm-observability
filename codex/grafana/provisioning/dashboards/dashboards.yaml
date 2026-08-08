@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: Codex
+    orgId: 1
+    folder: Codex
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

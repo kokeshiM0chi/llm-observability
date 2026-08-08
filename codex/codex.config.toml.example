@@ -1,0 +1,11 @@
+# このファイルをリポジトリ直下の .codex/config.toml にコピーして使います。
+# 実データに prompt を含めないため、log_user_prompt は false のままにします。
+
+[otel]
+environment = "local"
+log_user_prompt = false
+span_attributes = { "service.name" = "codex", "service.namespace" = "llm-observability", "deployment.environment" = "local" }
+
+trace_exporter = { otlp-http = { endpoint = "http://localhost:4318/v1/traces", protocol = "binary" } }
+metrics_exporter = { otlp-http = { endpoint = "http://localhost:4318/v1/metrics", protocol = "binary" } }
+exporter = { otlp-http = { endpoint = "http://localhost:4318/v1/logs", protocol = "binary" } }
