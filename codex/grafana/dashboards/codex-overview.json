@@ -64,9 +64,10 @@
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 38 },
       "id": 6,
       "targets": [
-        { "expr": "sum by (conversation_id) (cumulative_sum(sum_over_time({service_name=~\".+\"} | json | unwrap input_token_count [$__interval])))", "legendFormat": "input / {{conversation_id}}", "refId": "A" },
-        { "expr": "sum by (conversation_id) (cumulative_sum(sum_over_time({service_name=~\".+\"} | json | unwrap output_token_count [$__interval])))", "legendFormat": "output / {{conversation_id}}", "refId": "B" }
+        { "expr": "sum by (conversation_id) (sum_over_time({service_name=~\".+\"} | json | unwrap input_token_count [$__interval]))", "legendFormat": "input / {{conversation_id}}", "refId": "A" },
+        { "expr": "sum by (conversation_id) (sum_over_time({service_name=~\".+\"} | json | unwrap output_token_count [$__interval]))", "legendFormat": "output / {{conversation_id}}", "refId": "B" }
       ],
+      "transformations": [{ "id": "cumulativeSum", "options": {} }],
       "title": "Cumulative token count by conversation",
       "type": "timeseries"
     }
