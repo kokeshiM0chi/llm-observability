@@ -92,4 +92,4 @@ ORは「限られたリソースの中で、いかに目的関数を最適化（
 
 ## 次のステップへの提案
 
-まずは手元にあるcsvの列名（例: `timestamp`, `conversation_id`, `input_token`, `output_token` など）やデータの傾向を教えていただければ、**Python（pandas/matplotlibなど）で実際にSD/OR的な指標を計算・プロットするための具体的なコード**を作成できます。
+まずは手元にあるcsvの列名（例: `timestamp`, `conversation_id`, `input_token`, `output_token` など）やデータの傾向を教えていただければ、**Python（pandas/matplotlibなど）で実際にSD/OR的な指標を計算・プロットするための具体的なコード**を作成できます。gi
