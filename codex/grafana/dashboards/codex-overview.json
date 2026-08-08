@@ -51,7 +51,10 @@
       "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
       "id": 5,
-      "targets": [{ "expr": "sum by (token_type) (codex_turn_token_usage_sum{token_type=~\"input_token_count|output_token_count\"})", "legendFormat": "{{token_type}}", "refId": "A" }],
+      "targets": [
+        { "expr": "sum(codex_turn_token_usage_sum{token_type=~\"(?i).*input.*\"})", "legendFormat": "input_token_count", "refId": "A" },
+        { "expr": "sum(codex_turn_token_usage_sum{token_type=~\"(?i).*output.*\"})", "legendFormat": "output_token_count", "refId": "B" }
+      ],
       "title": "Input / output token count",
       "type": "timeseries"
     }
