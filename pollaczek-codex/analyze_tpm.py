@@ -59,6 +59,15 @@ def analyze_tpm_mg1(csv_path: str):
 
     res_df = pd.DataFrame(results)
 
+    # 3b. 実測データの時間経過に沿ったトークン利用率 (fixed N ではなく実データの時間変動)
+    df_time = (
+        df.set_index("event_timestamp")["total_tokens"]
+        .resample("1T")
+        .sum()
+        .fillna(0)
+        .rename("tokens_per_minute")
+    )
+
     # 4. グラフ化と保存
     plt.figure(figsize=(10, 6))
     for tpm in tpm_limits:
@@ -86,6 +95,23 @@ def analyze_tpm_mg1(csv_path: str):
     output_filename = "mg1_tpm_utilization.png"
     plt.savefig(output_filename, dpi=300)
     print(f"グラフを出力しました: {output_filename}")
+
+    # 4b. 実測データの時間経過で見たTPM利用率
+    plt.figure(figsize=(12, 6))
+    plt.plot(df_time.index, df_time.values, label="Observed TPM (tokens/min)", color="tab:blue")
+    for tpm in tpm_limits:
+        plt.axhline(tpm, linestyle="--", label=f"Capacity {tpm:,} TPM", alpha=0.8)
+
+    plt.title("Token Usage Over Time (Observed TPM)", fontsize=14)
+    plt.xlabel("Time", fontsize=12)
+    plt.ylabel("Tokens per Minute (TPM)", fontsize=12)
+    plt.grid(True, linestyle=":", alpha=0.6)
+    plt.legend(fontsize=10)
+    plt.tight_layout()
+
+    time_output_filename = "mg1_tpm_time_series.png"
+    plt.savefig(time_output_filename, dpi=300)
+    print(f"時間軸のグラフを出力しました: {time_output_filename}")
 
 
 if __name__ == "__main__":
